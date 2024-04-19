@@ -9,6 +9,7 @@ contract Fundraising {
         uint256 endDate;
         bool disabled;
         uint256 createdDate;
+        string metadataHash;
         address owner;
     }
 

@@ -8,6 +8,7 @@ contract FundraisingEvents {
         uint256 goal,
         uint256 startDate,
         uint256 endDate,
+        string metadataHash,
         address indexed owner
     );
 
@@ -16,6 +17,8 @@ contract FundraisingEvents {
         address investor,
         uint256 amount
     );
+
+    event CampaignMetadataUpdated(uint256 indexed id, string metadataHash);
 
     event CampaignDisabled(uint256 indexed id);
 }

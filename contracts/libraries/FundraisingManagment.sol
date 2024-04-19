@@ -9,7 +9,8 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
         string memory _fundraiser_name,
         uint256 _goal,
         uint256 _startDate,
-        uint256 _endDate
+        uint256 _endDate,
+        string memory _metadataHash
     ) public returns (uint256) {
         Campaign storage campaign = campaigns[numberOfCampaigns];
 
@@ -17,6 +18,7 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
         campaign.goal = _goal;
         campaign.startDate = _startDate;
         campaign.endDate = _endDate;
+        campaign.metadataHash = _metadataHash;
         campaign.disabled = false;
         campaign.createdDate = block.timestamp;
         campaign.owner = msg.sender;
@@ -27,6 +29,7 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
             _goal,
             _startDate,
             _endDate,
+            _metadataHash,
             msg.sender
         );
 
@@ -83,6 +86,15 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
             campaign.createdDate,
             campaign.owner
         );
+    }
+
+    function updateCampaignMetadata(
+        uint256 _campaignId,
+        string memory _metadataHash
+    ) external onlyCampaignOwner(_campaignId) {
+        campaigns[_campaignId].metadataHash = _metadataHash;
+
+        emit CampaignMetadataUpdated(_campaignId, _metadataHash);
     }
 
     function getCampaignInvestments(
