@@ -43,10 +43,10 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
     )
         public
         payable
-        onlyIfEnabled(_id)
-        onlyBeforeDeadline(_id)
-        onlyIfGoalNotReached(_id)
         onlyNonCampaignOwner(_id)
+        onlyIfEnabled(_id)
+        onlyIfGoalNotReached(_id)
+        onlyBeforeDeadline(_id)
     {
         uint256 amount = msg.value;
 

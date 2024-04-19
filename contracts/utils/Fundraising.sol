@@ -27,13 +27,19 @@ contract Fundraising {
         _;
     }
 
-    modifier onlyBeforeDeadline(uint256 _deadline) {
-        require(block.timestamp < _deadline, "Deadline has passed");
+    modifier onlyBeforeDeadline(uint256 _campaignId) {
+        require(
+            block.timestamp < campaigns[_campaignId].endDate,
+            "Deadline has passed"
+        );
         _;
     }
 
-    modifier onlyAfterDeadline(uint256 _deadline) {
-        require(block.timestamp >= _deadline, "Deadline has not passed yet");
+    modifier onlyAfterDeadline(uint256 _campaignId) {
+        require(
+            block.timestamp >= campaigns[_campaignId].endDate,
+            "Deadline has not passed"
+        );
         _;
     }
 
@@ -64,7 +70,7 @@ contract Fundraising {
     modifier onlyNonCampaignOwner(uint256 _campaignId) {
         require(
             msg.sender != campaigns[_campaignId].owner,
-            "Only non-campaign owner can call this function"
+            "Campaign owner cannot invest in own campaign"
         );
         _;
     }
