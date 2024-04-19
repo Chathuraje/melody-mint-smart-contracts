@@ -16,6 +16,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.24",
   defaultNetwork: "sepolia",
   networks: {
+    hardhat: {},
     sepolia: {
       url: TESTNET_ALCHEMY_RPC_URL,
       accounts: [`0x${TESTNET_WALLET_PRIVATE_KEY}`],

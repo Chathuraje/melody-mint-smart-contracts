@@ -18,7 +18,6 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
         campaign.goal = _goal;
         campaign.startDate = _startDate;
         campaign.endDate = _endDate;
-        campaign.raisedAmount = 0;
         campaign.metadataHash = _metadataHash;
         campaign.disabled = false;
         campaign.createdDate = block.timestamp;
@@ -52,9 +51,6 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
         uint256 amount = msg.value;
 
         campaignInvestments[_id].push(Investment(msg.sender, amount));
-        campaigns[_id].raisedAmount += amount;
-
-        payable(campaigns[_id].owner).transfer(amount);
 
         emit InvestmentMade(_id, msg.sender, amount);
     }
@@ -75,10 +71,8 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
             uint256,
             uint256,
             uint256,
-            uint256,
             bool,
             uint256,
-            string memory,
             address
         )
     {
@@ -88,10 +82,8 @@ contract FundraisingManagment is Fundraising, FundraisingEvents {
             campaign.goal,
             campaign.startDate,
             campaign.endDate,
-            campaign.raisedAmount,
             campaign.disabled,
             campaign.createdDate,
-            campaign.metadataHash,
             campaign.owner
         );
     }

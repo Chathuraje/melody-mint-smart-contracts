@@ -4,10 +4,9 @@ pragma solidity ^0.8.9;
 contract Fundraising {
     struct Campaign {
         string fundraiser_name;
-        uint256 goal; // Goal in wei
+        uint256 goal;
         uint256 startDate;
         uint256 endDate;
-        uint256 raisedAmount; // Raised amount in wei
         bool disabled;
         uint256 createdDate;
         string metadataHash;
@@ -16,7 +15,7 @@ contract Fundraising {
 
     struct Investment {
         address donor;
-        uint256 amount; // Investment amount in wei
+        uint256 amount;
     }
 
     mapping(uint256 => Campaign) internal campaigns;
@@ -46,7 +45,7 @@ contract Fundraising {
 
     modifier onlyIfGoalNotReached(uint256 _campaignId) {
         require(
-            campaigns[_campaignId].raisedAmount < campaigns[_campaignId].goal,
+            address(this).balance < campaigns[_campaignId].goal,
             "Fundraising goal reached"
         );
         _;
@@ -54,7 +53,7 @@ contract Fundraising {
 
     modifier onlyIfGoalReached(uint256 _campaignId) {
         require(
-            campaigns[_campaignId].raisedAmount >= campaigns[_campaignId].goal,
+            address(this).balance >= campaigns[_campaignId].goal,
             "Fundraising goal not reached"
         );
         _;
