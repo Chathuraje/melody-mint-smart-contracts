@@ -1,0 +1,21 @@
+{
+  "name": "hardhat-project",
+  "scripts": {
+    "console": "hardhat console",
+    "local": "hardhat node",
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "deploy": "hardhat ignition deploy  ignition/modules/deploy.ts --network sepolia",
+    "verify": "npx hardhat verify --network sepolia 0xd24108cF95EBb79E612F717A3B3F7A7c3434e6a5 --contract contracts/MelodyMintContract.sol:MelodyMintContract",
+    "automate": "npm run compile && npm run deploy && npm run verify"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.1",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.5",
+    "hardhat": "^2.22.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

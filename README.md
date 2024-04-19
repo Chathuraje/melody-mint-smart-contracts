@@ -20,6 +20,16 @@ Whether you're an aspiring artist looking to fund your next project or an invest
 
 ## Software Details
 
+Try running some of the following tasks:
+
+```shell
+npx hardhat help
+npx hardhat test
+REPORT_GAS=true npx hardhat test
+npx hardhat node
+npx hardhat run scripts/deploy.ts
+```
+
 ## Changelog
 
 ## Contributing
