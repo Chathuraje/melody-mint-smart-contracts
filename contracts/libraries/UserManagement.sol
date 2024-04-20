@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.0;
 
-import "../models/Ownable.sol";
+import "../utils/Ownable.sol";
 import "../models/Users.sol";
 import "../events/UsersEvents.sol";
 
