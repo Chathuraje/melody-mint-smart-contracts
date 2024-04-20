@@ -3,8 +3,8 @@
 
 pragma solidity ^0.8.0;
 
-import "../utils/Ownable.sol";
-import "../utils/Users.sol";
+import "../models/Ownable.sol";
+import "../models/Users.sol";
 import "../events/UsersEvents.sol";
 
 contract UserManagement is Ownable, Users, UsersEvents {

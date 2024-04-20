@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.9;
 
-import "../utils/Fundraising.sol";
+import "../models/Fundraising.sol";
 import "../events/FundraisingEvents.sol";
 
 contract FundraisingManagement is Fundraising, FundraisingEvents {
