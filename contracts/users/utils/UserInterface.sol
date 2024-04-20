@@ -2,17 +2,18 @@
 
 pragma solidity ^0.8.0;
 
-contract Users {
+contract UserInterface {
     struct User {
-        bytes32 userHash;
-        address walletAddress;
+        bytes32 user_hash;
+        address wallet_address;
     }
 
     mapping(address => User) internal users;
 
-    modifier onlyUser() {
+
+     modifier onlyUser() {
         require(
-            users[msg.sender].walletAddress != address(0),
+            users[msg.sender].wallet_address != address(0),
             "User not registered"
         );
         _;
@@ -20,7 +21,7 @@ contract Users {
 
     modifier newUser() {
         require(
-            users[msg.sender].walletAddress == address(0),
+            users[msg.sender].wallet_address == address(0),
             "User already registered"
         );
         _;
