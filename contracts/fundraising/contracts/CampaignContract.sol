@@ -83,6 +83,7 @@ contract CampaignContract is
             uint256,
             uint256,
             uint256,
+            uint256,
             bool,
             uint256,
             string memory,
@@ -94,6 +95,7 @@ contract CampaignContract is
         return (
             campaign.fundraiser_name,
             campaign.goal,
+            campaign.distribution_percentage,
             campaign.start_date,
             campaign.end_date,
             campaign.current_amount,
