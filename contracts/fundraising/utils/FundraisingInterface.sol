@@ -12,8 +12,9 @@ contract FundraisingInterface {
         uint256 current_amount;
         bool disabled;
         uint256 created_date;
-        string metadata_hash;
+        string campaign_meta_data;
         address owner;
+        address collection_address;
     }
 
     struct Investment {

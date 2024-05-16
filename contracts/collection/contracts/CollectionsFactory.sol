@@ -13,11 +13,13 @@ contract CollectionsFactory is
 {
     function createCollection(
         string memory _collectionName,
-        string memory _collectionSymbol
-    ) public notCollectionExists(_collectionName) returns (address) {
+        string memory _collection_symbol,
+        string memory _collection_meta_data
+    ) internal notCollectionExists(_collectionName) returns (address) {
         SingleContract newCollection = new SingleContract(
             _collectionName,
-            _collectionSymbol
+            _collection_symbol,
+            _collection_meta_data
         );
 
         collections[_collectionName] = address(newCollection);

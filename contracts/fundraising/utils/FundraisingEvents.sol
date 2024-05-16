@@ -10,8 +10,9 @@ contract FundraisingEvents {
         uint256 distribution_percentage,
         uint256 start_date,
         uint256 end_date,
-        string metadata_hash,
-        address indexed owner
+        string campaign_meta_data,
+        address indexed owner,
+        address collection_address
     );
 
     event InvestmentMade(
