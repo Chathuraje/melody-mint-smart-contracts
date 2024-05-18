@@ -32,7 +32,8 @@ contract CampaignContract is
         collection_address = createCollection(
             _collection_name,
             _collection_symbol,
-            _collection_meta_data
+            _collection_meta_data,
+            msg.sender
         );
 
         campaign.fundraiser_name = _fundraiser_name;
