@@ -9,6 +9,8 @@ contract SingleContract is ERC721, Ownable {
     string private _collectionMetaDataURI;
     uint256 private _nextTokenId;
 
+    mapping(uint256 => uint256) private _nftPrices;
+
     constructor(
         string memory _collectionName,
         string memory _collection_symbol,
@@ -25,6 +27,18 @@ contract SingleContract is ERC721, Ownable {
         return tokenId;
     }
 
+    function setPrice(uint256 _tokenId, uint256 _price) public {
+        require(
+            ownerOf(_tokenId) == msg.sender,
+            "You are not the owner of this NFT"
+        );
+        _nftPrices[_tokenId] = _price;
+    }
+
+    function getPrice(uint256 _tokenId) public view returns (uint256) {
+        return _nftPrices[_tokenId];
+    }
+
     function getAllNFTs() public view returns (uint256[] memory) {
         uint256[] memory tokenIds = new uint256[](_nextTokenId);
 
@@ -35,21 +49,42 @@ contract SingleContract is ERC721, Ownable {
         return tokenIds;
     }
 
-    function getAllNFTsWithOwners() public view returns (address[] memory) {
-        address[] memory tokenIds = new address[](_nextTokenId);
-
-        for (uint256 i = 0; i < _nextTokenId; i++) {
-            tokenIds[i] = ownerOf(i);
-        }
-
-        return tokenIds;
+    struct NFTInfo {
+        address owner;
+        uint256 price;
     }
 
-    function getSingleNFT(uint256 _tokenId)
-        public
-        view
-        returns (address, uint256)
-    {
-        return (ownerOf(_tokenId), _tokenId);
+    function getAllNFTsWithOwners() public view returns (NFTInfo[] memory) {
+        NFTInfo[] memory nftInfos = new NFTInfo[](_nextTokenId);
+
+        for (uint256 i = 0; i < _nextTokenId; i++) {
+            nftInfos[i] = NFTInfo({owner: ownerOf(i), price: _nftPrices[i]});
+        }
+
+        return nftInfos;
+    }
+
+    function getSingleNFT(
+        uint256 _tokenId
+    ) public view returns (address, uint256, uint256) {
+        return (ownerOf(_tokenId), _tokenId, _nftPrices[_tokenId]);
+    }
+
+    function buyNFT(uint256 _tokenId) public payable {
+        address owner = ownerOf(_tokenId);
+        require(owner != msg.sender, "You already own this NFT");
+        require(msg.value > 0, "You need to pay for this NFT");
+
+        address payable ownerPayable = payable(owner);
+        ownerPayable.transfer(msg.value);
+
+        _transfer(owner, msg.sender, _tokenId);
+    }
+
+    function transferNFT(uint256 _tokenId, address _to) public {
+        address owner = ownerOf(_tokenId);
+        require(owner == msg.sender, "You are not the owner of this NFT");
+
+        _transfer(owner, _to, _tokenId);
     }
 }

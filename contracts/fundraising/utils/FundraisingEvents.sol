@@ -27,4 +27,9 @@ contract FundraisingEvents {
     );
 
     event CampaignDisabled(uint256 indexed campaign_id);
+
+    event RoyaltiesDistributed(
+        uint256 indexed campaign_id,
+        uint256 earnings_amount
+    );
 }

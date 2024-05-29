@@ -31,4 +31,44 @@ contract InvestmentContract is FundraisingInterface, FundraisingEvents {
     ) public view returns (Investment[] memory) {
         return campaignInvestments[_campaign_id];
     }
+
+    function distributeRoyaltiesToInvestors(
+        uint256 _campaign_id,
+        uint256 _earnings_amount
+    ) public onlyAfterDeadline(_campaign_id) {
+        Campaign storage campaign = campaigns[_campaign_id];
+
+        require(
+            campaign.current_amount >= campaign.goal,
+            "Fundraising goal not reached"
+        );
+
+        uint256 totalAmount = _earnings_amount;
+        uint256 distributionPercentage = campaign.distribution_percentage;
+
+        Investment[] storage investments = campaignInvestments[_campaign_id];
+
+        // Loop through investments and distribute earnings
+        for (uint256 i = 0; i < investments.length; i++) {
+            Investment storage investment = investments[i];
+
+            uint256 amountToDistribute = (investment.amount *
+                distributionPercentage) / 100;
+
+            // Ensure the contract has enough funds to distribute
+            require(
+                totalAmount >= amountToDistribute,
+                "Insufficient funds for distribution"
+            );
+
+            // Update total amount remaining to distribute
+            totalAmount -= amountToDistribute;
+
+            // Transfer funds to investor
+            payable(investment.donor).transfer(amountToDistribute);
+        }
+
+        // Emit event
+        emit RoyaltiesDistributed(_campaign_id, _earnings_amount - totalAmount);
+    }
 }
